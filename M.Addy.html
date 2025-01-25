@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balloons and Image</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      background-color: #ffe6f2; /* Light pink background */
+      font-family: Arial, sans-serif;
+      background-image: url('https://slidechef.net/wp-content/uploads/2023/10/Free-Heart-Background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+    h1 {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: 'Dancing Script', cursive; /* Handwritten font */
+      font-weight: bold;
+      color: blue;
+      font-size: 6vw; /* Responsive font size */
+      margin: 0;
+    }
+    img {
+      max-width: 100%;
+      max-height: 60%;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 4vw; /* Responsive button size */
+      color: white;
+      background-color: blue;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+      left: 5%;
+      bottom: 5%;
+      transform: translateX(0); /* Center button horizontally */
+    }
+    .balloon {
+      width: 25vw;
+      height: 30vw;
+      background-color: pink;
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      line-height: 30vw;
+      color: white;
+      font-weight: bold;
+      font-size: 5vw; /* Responsive font size for balloons */
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      animation: float 4s ease-in-out infinite;
+      cursor: pointer;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+    .dropdown {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .dropdown label {
+      font-size: 3vw; /* Responsive label size */
+    }
+    .dropdown select {
+      padding: 4vw;
+      font-size: 3vw; /* Responsive dropdown font size */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+    }
+    #display-message {
+      position: absolute;
+      left: 5%;
+      top: 45%;
+      font-size: 5vw;
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+      width: 90%;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #ffe6f2;
+      display: none;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 8vw; /* Adjust title size */
+      }
+      img {
+        max-height: 50%;
+      }
+      .balloon {
+        width: 30vw;
+        height: 35vw;
+        font-size: 8vw; /* Larger balloon text on mobile */
+      }
+      button {
+        font-size: 6vw; /* Larger button text */
+        padding: 12px 24px;
+      }
+      .dropdown label {
+        font-size: 5vw;
+      }
+      .dropdown select {
+        padding: 5vw;
+        font-size: 5vw;
+      }
+      #display-message {
+        font-size: 6vw; /* Larger text for messages on mobile */
+        top: 40%;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <h1>This is Addy!!!</h1> <!-- Title in handwritten font -->
+
+  <div class="dropdown">
+    <label for="menu">Look:</label>
+    <select id="menu" onchange="handleDropdownChange(event)">
+      <option value="">-- Select --</option>
+      <option value="about-me">About Me</option>
+      <option value="my-family">My Family</option>
+      <option value="my-favorite-people">My Favorite People</option> <!-- Updated option -->
+    </select>
+  </div>
+
+  <div id="display-message"></div>
+
+  <button onclick="createBalloons()">CLICK</button>
+
+  <img src="https://imgur.com/syp30xh.jpg" alt="Centered Image">
+  <div id="balloon-container"></div>
+
+  <script>
+    const messages = ["Little Love", "Princess", "Smart", "Beautiful", "Funny"];
+    const colors = ["red", "blue", "green", "yellow", "purple"];
+
+    function createBalloons() {
+      const container = document.getElementById("balloon-container");
+      container.innerHTML = ""; // Clear previous balloons
+      messages.forEach((message, index) => {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.backgroundColor = colors[index];
+        balloon.style.left = `${10 + Math.random() * 80}%`; // Scatter balloons horizontally around image
+        balloon.style.top = `${10 + Math.random() * 70}%`; // Scatter vertically outside image area
+        balloon.textContent = "Click";
+
+        balloon.onclick = () => {
+          const display = document.getElementById("display-message");
+          display.textContent = message; // Display message on click
+          display.style.display = "block"; // Show message
+          balloon.remove(); // Remove balloon on click
+        };
+
+        container.appendChild(balloon);
+      });
+    }
+
+    function handleDropdownChange(event) {
+      const value = event.target.value;
+      const display = document.getElementById("display-message");
+      if (value === "about-me") {
+        display.textContent = "Hello I am Adelina and I love to sing, play with my friends and shopping";
+        display.style.display = "block";
+      } else if (value === "my-family") {
+        display.innerHTML = `<img src='https://ih1.redbubble.net/image.5223780878.8819/flat,750x,075,f-pad,750x1000,f8f8f8.jpg' alt='My Family' style='max-width: 100%; border-radius: 10px;'>`;
+        display.style.display = "block";
+      } else if (value === "my-favorite-people") {
+        display.textContent = "Tia, Tia"; // Updated to My Favorite People
+        display.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
